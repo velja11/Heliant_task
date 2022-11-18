@@ -8,6 +8,7 @@ const Tasks = (props) => {
         return (
           <Task
             key={exc.id}
+            id={exc.id}
             title={exc.title}
             date={exc.date}
             desc={exc.desc}

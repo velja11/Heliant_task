@@ -19,7 +19,7 @@ const TaskForm = () => {
   const titleRef = useRef(null);
   const [date, setDate] = useState(currDate);
   const descRef = useRef(null);
-  const [priority, setPriority] = useState("nizak");
+  const [priority, setPriority] = useState("Nizak");
 
   const dateHandler = (e) => {
     setDate(e.target.value);
@@ -61,23 +61,22 @@ const TaskForm = () => {
         <input
           id="datum"
           type="date"
-          defaultValue={currDate}
+          value={currDate}
           min={currDate}
           onChange={dateHandler}
         />
         <label htmlFor="opis">Opis</label>
-        <textarea
-          id="opis"
-          maxLength="100"
-          rows="3"
-          ref={descRef}
-          defaultValue="Description"
-        ></textarea>
+        <textarea id="opis" maxLength="100" rows="3" ref={descRef}></textarea>
         <label htmlFor="prioritet">Prioritet</label>
-        <select id="prioritet" name="Prioritet" onChange={getPriority}>
-          <option value="nizak">Nizak</option>
-          <option value="srednji">Srednji</option>
-          <option value="visok">Visok</option>
+        <select
+          id="prioritet"
+          name="Prioritet"
+          value={priority}
+          onChange={getPriority}
+        >
+          <option value="Nizak">Nizak</option>
+          <option value="Srednji">Srednji</option>
+          <option value="Visok">Visok</option>
         </select>
         <button type="submit" className={classes.btnSub}>
           Dodaj zadatak

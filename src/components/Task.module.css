@@ -16,3 +16,12 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.delBtn {
+  background-color: rgb(238, 101, 101);
+  border-radius: 10px;
+  padding: 4px;
+}
+.delBtn:hover {
+  cursor: pointer;
+}

@@ -17,4 +17,10 @@
 .btnSub {
   background-color: greenyellow;
   padding: 4px;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.btnSub:hover {
+  cursor: pointer;
 }

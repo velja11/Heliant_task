@@ -1,6 +1,14 @@
+import { useContext } from "react";
+import TaskContext from "../store/tasks-context";
 import classes from "./Task.module.css";
 
 const Task = (props) => {
+  const taskCtx = useContext(TaskContext);
+
+  const deleteTaskHandler = (taskId) => {
+    taskCtx.deleteTask(taskId);
+  };
+
   return (
     <div className={classes.task}>
       <button style={{ position: "absolute" }}>+</button>
@@ -10,7 +18,13 @@ const Task = (props) => {
         <span>{props.date}</span>
       </div>
       <textarea value={props.desc}>{props.desc}</textarea>
-      <button style={{ marginTop: "10px" }}>Obrisi</button>
+      <button
+        className={classes.delBtn}
+        style={{ marginTop: "10px" }}
+        onClick={() => deleteTaskHandler(props.id)}
+      >
+        Obrisi
+      </button>
     </div>
   );
 };
