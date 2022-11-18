@@ -1,55 +1,68 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
+import TaskContext from "../../store/tasks-context";
 import classes from "./TaskForm.module.css";
 
-const TaskForm = () => {
+const getCurrDate = () => {
   const date = new Date();
   const currDate = date.getDate();
   date.setDate(currDate);
   const defaultDate = date.toLocaleDateString("en-CA");
 
-  const nazivZadatka = useRef(null);
-  const [datum, setDatum] = useState(defaultDate);
-  const opis = useRef(null);
-  const [prioritet, setPrioritet] = useState("nizak");
+  return defaultDate;
+};
+
+const TaskForm = () => {
+  const taskCtx = useContext(TaskContext);
+
+  const currDate = getCurrDate();
+
+  const titleRef = useRef(null);
+  const [date, setDate] = useState(currDate);
+  const descRef = useRef(null);
+  const [priority, setPriority] = useState("nizak");
 
   const dateHandler = (e) => {
-    setDatum(e.target.value);
+    setDate(e.target.value);
   };
 
   const getPriority = (e) => {
-    setPrioritet(e.target.value);
+    setPriority(e.target.value);
   };
 
   const addTaskHandler = (e) => {
     e.preventDefault();
 
-    const test = nazivZadatka.current.value;
-    const opisZadatka = opis.current.value;
+    const title = titleRef.current.value;
+    const description = descRef.current.value;
 
-    if (test === "" || opisZadatka === "" || datum === "" || prioritet === "") {
+    if (title === "" || description === "" || date === "" || priority === "") {
       alert("Niste popunili sva polja");
       return;
     }
 
-    console.log(test, datum, opisZadatka, prioritet);
+    taskCtx.addTask({
+      id: Math.floor(Math.random() * 1000000),
+      title: title,
+      date: date,
+      desc: description,
+      priority: priority,
+    });
+
+    titleRef.current.value = "";
+    descRef.current.value = "";
   };
 
   return (
     <form className={classes.form} onSubmit={addTaskHandler}>
       <div className={classes.elements}>
         <label htmlFor="naziv">Naziv</label>
-        <input
-          id="naziv"
-          type="text"
-          maxLength="100"
-          ref={nazivZadatka}
-        ></input>
+        <input id="naziv" type="text" maxLength="100" ref={titleRef}></input>
         <label htmlFor="datum">Datum</label>
         <input
           id="datum"
           type="date"
-          defaultValue={defaultDate}
-          min={defaultDate}
+          defaultValue={currDate}
+          min={currDate}
           onChange={dateHandler}
         />
         <label htmlFor="opis">Opis</label>
@@ -57,7 +70,7 @@ const TaskForm = () => {
           id="opis"
           maxLength="100"
           rows="3"
-          ref={opis}
+          ref={descRef}
           defaultValue="Description"
         ></textarea>
         <label htmlFor="prioritet">Prioritet</label>
@@ -66,7 +79,9 @@ const TaskForm = () => {
           <option value="srednji">Srednji</option>
           <option value="visok">Visok</option>
         </select>
-        <button type="submit">Dodaj zadatak</button>
+        <button type="submit" className={classes.btnSub}>
+          Dodaj zadatak
+        </button>
       </div>
     </form>
   );

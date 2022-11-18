@@ -1,8 +1,9 @@
 import Task from "./Task";
+import classes from "./TaskList.module.css";
 
 const Tasks = (props) => {
   return (
-    <div>
+    <div className={classes.tasklist}>
       {props.excercise.map((exc) => {
         return (
           <Task
@@ -10,6 +11,7 @@ const Tasks = (props) => {
             title={exc.title}
             date={exc.date}
             desc={exc.desc}
+            priority={exc.priority}
           />
         );
       })}
