@@ -61,7 +61,7 @@ const TaskForm = () => {
         <input
           id="datum"
           type="date"
-          value={currDate}
+          defaultValue={currDate}
           min={currDate}
           onChange={dateHandler}
         />
