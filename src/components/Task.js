@@ -9,9 +9,20 @@ const Task = (props) => {
     taskCtx.deleteTask(taskId);
   };
 
+  const finishTaskHandler = () => {
+    taskCtx.toogleTask(props.id);
+  };
+
   return (
     <div className={classes.task}>
-      <button style={{ position: "absolute" }}>+</button>
+      <button
+        className={`${
+          props.complete ? classes.finishBtn : classes.unfinishBtn
+        }`}
+        onClick={finishTaskHandler}
+      >
+        {props.complete ? "✓" : "+"}
+      </button>
       <span>{props.priority} prioritet</span>
       <div className={classes.data}>
         <h1>{props.title}</h1>

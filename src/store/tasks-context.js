@@ -4,6 +4,7 @@ const TaskContext = createContext({
   tasks: [],
   addTask: (task) => {},
   deleteTask: (taskId) => {},
+  toogleTask: (taskId) => {},
 });
 
 export function TaskContextProvider(props) {
@@ -20,10 +21,23 @@ export function TaskContextProvider(props) {
     setTasks(filterTask);
   }
 
+  function toogleTaskHandler(taskId) {
+    const updateTasks = [...tasks].map((task) => {
+      if (task.id === taskId) {
+        task.complete = !task.complete;
+      }
+
+      return task;
+    });
+
+    setTasks(updateTasks);
+  }
+
   const tasksCtx = {
     tasks: tasks,
     addTask: addTaskHandler,
     deleteTask: deleteTaskHandler,
+    toogleTask: toogleTaskHandler,
   };
 
   return (

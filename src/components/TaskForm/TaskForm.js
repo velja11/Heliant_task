@@ -36,7 +36,6 @@ const TaskForm = () => {
     const description = descRef.current.value;
 
     if (title === "" || description === "" || date === "" || priority === "") {
-      alert("Niste popunili sva polja");
       return;
     }
 
@@ -46,6 +45,7 @@ const TaskForm = () => {
       date: date,
       desc: description,
       priority: priority,
+      complete: false,
     });
 
     titleRef.current.value = "";
@@ -56,7 +56,13 @@ const TaskForm = () => {
     <form className={classes.form} onSubmit={addTaskHandler}>
       <div className={classes.elements}>
         <label htmlFor="naziv">Naziv</label>
-        <input id="naziv" type="text" maxLength="100" ref={titleRef}></input>
+        <input
+          id="naziv"
+          type="text"
+          maxLength="100"
+          ref={titleRef}
+          required
+        ></input>
         <label htmlFor="datum">Datum</label>
         <input
           id="datum"
@@ -66,7 +72,13 @@ const TaskForm = () => {
           onChange={dateHandler}
         />
         <label htmlFor="opis">Opis</label>
-        <textarea id="opis" maxLength="100" rows="3" ref={descRef}></textarea>
+        <textarea
+          id="opis"
+          maxLength="100"
+          rows="3"
+          ref={descRef}
+          required
+        ></textarea>
         <label htmlFor="prioritet">Prioritet</label>
         <select
           id="prioritet"

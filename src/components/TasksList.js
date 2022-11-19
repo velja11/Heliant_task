@@ -13,6 +13,7 @@ const Tasks = (props) => {
             date={exc.date}
             desc={exc.desc}
             priority={exc.priority}
+            complete={exc.complete}
           />
         );
       })}
