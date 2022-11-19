@@ -87,7 +87,7 @@ const UpdateModal = (props) => {
                 <option value="Visok">Visok</option>
               </select>
             </div>
-            <button className={classes.btnUpd}>Update</button>
+            <button className={classes.btnUpd}>Izmeni</button>
           </form>
         </div>
       </div>
