@@ -17,7 +17,7 @@ function App() {
     <div className="App">
       <TaskForm />
       {tasks.length === 0 ? (
-        <p>There is no tasks currently</p>
+        <p>Trenutno nema zadataka!</p>
       ) : (
         <TasksList excercise={tasks} showModal={onShowModal} />
       )}
