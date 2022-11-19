@@ -35,3 +35,11 @@
   background-color: rgb(27, 239, 27);
   position: absolute;
 }
+
+@media screen and (max-widht: 600px) {
+  .data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -1,7 +1,7 @@
 import Task from "./Task";
 import classes from "./TaskList.module.css";
 
-const Tasks = (props) => {
+const TasksList = (props) => {
   return (
     <div className={classes.tasklist}>
       {props.excercise.map((exc) => {
@@ -14,6 +14,7 @@ const Tasks = (props) => {
             desc={exc.desc}
             priority={exc.priority}
             complete={exc.complete}
+            onClick={props.showModal}
           />
         );
       })}
@@ -21,4 +22,4 @@ const Tasks = (props) => {
   );
 };
 
-export default Tasks;
+export default TasksList;

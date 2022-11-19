@@ -9,13 +9,17 @@ function App() {
 
   const tasks = taskCtx.tasks;
 
+  const onShowModal = () => {
+    taskCtx.showModal();
+  };
+
   return (
     <div className="App">
       <TaskForm />
       {tasks.length === 0 ? (
         <p>There is no tasks currently</p>
       ) : (
-        <TasksList excercise={tasks} />
+        <TasksList excercise={tasks} showModal={onShowModal} />
       )}
     </div>
   );

@@ -1,25 +1,37 @@
 import { useContext } from "react";
 import TaskContext from "../store/tasks-context";
 import classes from "./Task.module.css";
+import UpdateModal from "./Modal/UpdateModal";
 
 const Task = (props) => {
   const taskCtx = useContext(TaskContext);
 
-  const deleteTaskHandler = (taskId) => {
+  const deleteTaskHandler = (e, taskId) => {
+    e.stopPropagation();
     taskCtx.deleteTask(taskId);
   };
 
-  const finishTaskHandler = () => {
+  const finishTaskHandler = (e) => {
+    e.stopPropagation();
     taskCtx.toogleTask(props.id);
   };
 
+  function test() {
+    props.onClick();
+  }
+
+  const onCloseModal = (e) => {
+    e.stopPropagation();
+    taskCtx.closeModal();
+  };
+
   return (
-    <div className={classes.task}>
+    <div className={classes.task} onClick={() => test()}>
       <button
         className={`${
           props.complete ? classes.finishBtn : classes.unfinishBtn
         }`}
-        onClick={finishTaskHandler}
+        onClick={(e) => finishTaskHandler(e)}
       >
         {props.complete ? "✓" : "+"}
       </button>
@@ -32,10 +44,20 @@ const Task = (props) => {
       <button
         className={classes.delBtn}
         style={{ marginTop: "10px" }}
-        onClick={() => deleteTaskHandler(props.id)}
+        onClick={(e) => deleteTaskHandler(e, props.id)}
       >
         Obrisi
       </button>
+      {taskCtx.modal && (
+        <UpdateModal
+          title={props.title}
+          date={props.date}
+          desc={props.desc}
+          priority={props.priority}
+          id={props.id}
+          closeModal={(e) => onCloseModal(e)}
+        />
+      )}
     </div>
   );
 };

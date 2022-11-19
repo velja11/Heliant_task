@@ -5,10 +5,15 @@ const TaskContext = createContext({
   addTask: (task) => {},
   deleteTask: (taskId) => {},
   toogleTask: (taskId) => {},
+  modal: null,
+  showModal: () => {},
+  closeModal: () => {},
+  updateTask: (id, task) => {},
 });
 
 export function TaskContextProvider(props) {
   const [tasks, setTasks] = useState([]);
+  const [modal, setModal] = useState(false);
 
   function addTaskHandler(task) {
     setTasks((prevState) => {
@@ -33,11 +38,39 @@ export function TaskContextProvider(props) {
     setTasks(updateTasks);
   }
 
+  function closeModalHandler() {
+    setModal(false);
+  }
+
+  function showModalHandler() {
+    setModal(true);
+  }
+
+  function updateTaskHandler(id, task) {
+    const updateList = [...tasks].map((tsk) => {
+      if (tsk.id === id) {
+        tsk.title = task.title || tsk.title;
+        tsk.desc = task.desc || tsk.desc;
+        tsk.date = task.date || tsk.date;
+        tsk.priority = task.priority || tsk.date;
+      }
+
+      return tsk;
+    });
+
+    setTasks(updateList);
+    setModal(false);
+  }
+
   const tasksCtx = {
     tasks: tasks,
+    modal: modal,
     addTask: addTaskHandler,
     deleteTask: deleteTaskHandler,
     toogleTask: toogleTaskHandler,
+    closeModal: closeModalHandler,
+    showModal: showModalHandler,
+    updateTask: updateTaskHandler,
   };
 
   return (
