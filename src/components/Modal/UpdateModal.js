@@ -56,7 +56,7 @@ const UpdateModal = (props) => {
                 required
                 defaultValue={props.title}
               ></input>
-              <label htmlFor="datum">Datum</label>
+              <label htmlFor="datum">Rok predaje</label>
               <input
                 type="date"
                 placeholder={props.date}
