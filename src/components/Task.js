@@ -16,7 +16,7 @@ const Task = (props) => {
     taskCtx.toogleTask(props.id);
   };
 
-  function test() {
+  function openModal() {
     props.onClick();
   }
 
@@ -25,8 +25,21 @@ const Task = (props) => {
     taskCtx.closeModal();
   };
 
+  let classesPriority;
+
+  if (props.priority === "Nizak") {
+    classesPriority = classes.lowPrior;
+  } else if (props.priority === "Srednji") {
+    classesPriority = classes.middPrior;
+  } else {
+    classesPriority = classes.highPrior;
+  }
+
   return (
-    <div className={classes.task} onClick={() => test()}>
+    <div
+      className={`${classes.task} ${classesPriority}`}
+      onClick={() => openModal()}
+    >
       <button
         className={`${
           props.complete ? classes.finishBtn : classes.unfinishBtn
@@ -40,7 +53,7 @@ const Task = (props) => {
         <h1>{props.title}</h1>
         <span>{props.date}</span>
       </div>
-      <textarea value={props.desc}>{props.desc}</textarea>
+      <textarea defaultValue={props.desc}></textarea>
       <button
         className={classes.delBtn}
         style={{ marginTop: "10px" }}

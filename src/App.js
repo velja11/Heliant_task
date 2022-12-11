@@ -1,8 +1,9 @@
 import "./App.css";
 import TasksList from "./components/TasksList";
 import TaskForm from "./components/TaskForm/TaskForm";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import TaskContext from "./store/tasks-context";
+import Navigation from "./components/Navigation/Navigation";
 
 function App() {
   const taskCtx = useContext(TaskContext);
@@ -13,13 +14,28 @@ function App() {
     taskCtx.showModal();
   };
 
+  useEffect(() => {
+    const newTasks = localStorage.getItem("stgtask");
+    const storageTasks = JSON.parse(newTasks);
+
+    taskCtx.reloadTask(storageTasks);
+  }, []);
+
+  useEffect(() => {
+    const updTask = JSON.stringify(tasks);
+    localStorage.setItem("stgtask", updTask);
+  }, [tasks]);
+
   return (
     <div className="App">
       <TaskForm />
-      {tasks.length === 0 ? (
+      {!tasks.length ? (
         <p>Trenutno nema zadataka!</p>
       ) : (
-        <TasksList excercise={tasks} showModal={onShowModal} />
+        <>
+          {tasks.length > 1 && <Navigation />}
+          <TasksList excercise={tasks} showModal={onShowModal} />
+        </>
       )}
     </div>
   );

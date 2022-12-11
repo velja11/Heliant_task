@@ -3,11 +3,20 @@ import classes from "./UpdateModal.module.css";
 import { useContext } from "react";
 import TaskContext from "../../store/tasks-context";
 
+const getCurrDate = () => {
+  const date = new Date();
+  const currDate = date.getDate();
+  date.setDate(currDate);
+  const defaultDate = date.toLocaleDateString("en-CA");
+
+  return defaultDate;
+};
+
 const UpdateModal = (props) => {
   const taskCtx = useContext(TaskContext);
 
   const titleRef = useRef(null);
-  const [date, setDate] = useState(props.date);
+  const [date, setDate] = useState(getCurrDate());
   const descRef = useRef(null);
   const [priority, setPriority] = useState("Nizak");
 
@@ -43,10 +52,10 @@ const UpdateModal = (props) => {
         <div className={classes.backg} onClick={props.closeModal} />
         <div className={classes.modal}>
           <form
-            className={classes.test2}
+            className={classes.updForm}
             onSubmit={(e, id, task) => updateTaskHandler(e, id)}
           >
-            <div className={classes.test}>
+            <div className={classes.formDir}>
               <label htmlFor="naziv">Naziv</label>
               <input
                 type="text"
@@ -61,7 +70,7 @@ const UpdateModal = (props) => {
                 type="date"
                 placeholder={props.date}
                 id="datum"
-                defaultValue={date}
+                defaultValue={props.date}
                 min={date}
                 onChange={dateHandler}
               ></input>
@@ -72,9 +81,8 @@ const UpdateModal = (props) => {
                 rows="3"
                 ref={descRef}
                 required
-              >
-                {props.desc}
-              </textarea>
+                defaultValue={props.desc}
+              ></textarea>
               <label htmlFor="prioritet">Prioritet</label>
               <select
                 id="prioritet"

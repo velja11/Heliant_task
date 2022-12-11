@@ -9,11 +9,16 @@ const TaskContext = createContext({
   showModal: () => {},
   closeModal: () => {},
   updateTask: (id, task) => {},
+  reloadTask: (task) => {},
+  sortTask: () => {},
+  searchTask: (query) => {},
+  order: false,
 });
 
 export function TaskContextProvider(props) {
   const [tasks, setTasks] = useState([]);
   const [modal, setModal] = useState(false);
+  const [order, setOrder] = useState(false);
 
   function addTaskHandler(task) {
     setTasks((prevState) => {
@@ -24,6 +29,10 @@ export function TaskContextProvider(props) {
   function deleteTaskHandler(taskId) {
     const filterTask = tasks.filter((task) => task.id !== taskId);
     setTasks(filterTask);
+  }
+
+  function reloadTaskHandler(newTasks) {
+    setTasks(newTasks);
   }
 
   function toogleTaskHandler(taskId) {
@@ -62,6 +71,22 @@ export function TaskContextProvider(props) {
     setModal(false);
   }
 
+  function sortTaskHandler() {
+    setOrder((prevState) => !prevState);
+    const newTask = [...tasks];
+    newTask.sort((a, b) => {
+      return order
+        ? new Date(a.date) - new Date(b.date)
+        : new Date(b.date) - new Date(a.date);
+    });
+    setTasks(newTask);
+  }
+
+  function searchTaskHandler(query) {
+    const queryTasks = tasks.filter((tsk) => tsk.title.includes(query));
+    setTasks(queryTasks);
+  }
+
   const tasksCtx = {
     tasks: tasks,
     modal: modal,
@@ -71,6 +96,10 @@ export function TaskContextProvider(props) {
     closeModal: closeModalHandler,
     showModal: showModalHandler,
     updateTask: updateTaskHandler,
+    reloadTask: reloadTaskHandler,
+    sortTask: sortTaskHandler,
+    searchTask: searchTaskHandler,
+    order: order,
   };
 
   return (
