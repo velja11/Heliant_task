@@ -17,7 +17,7 @@ const UpdateModal = (props) => {
   console.log(props);
 
   const titleRef = useRef(null);
-  const [date, setDate] = useState(props.date);
+  const [date, setDate] = useState(getCurrDate());
   const descRef = useRef(null);
   const [priority, setPriority] = useState(props.priority);
 

@@ -4,6 +4,7 @@ import TaskForm from "./components/TaskForm/TaskForm";
 import { useContext, useEffect } from "react";
 import TaskContext from "./store/tasks-context";
 import Navigation from "./components/Navigation/Navigation";
+
 import { useState } from "react";
 import UpdateModal from "./components/Modal/UpdateModal";
 
@@ -20,8 +21,6 @@ function App() {
     e.stopPropagation();
     taskCtx.closeModal();
   };
-
-  console.log("Konju jedan", taskForUpd);
 
   useEffect(() => {
     const updTask = JSON.stringify(tasks);

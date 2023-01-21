@@ -45,12 +45,14 @@ const Task = (props) => {
         <h1>{props.title}</h1>
         <span>{props.date}</span>
       </div>
+
       <textarea
         defaultValue={props.desc}
         placeholder={props.desc}
         maxLength="100"
         rows="3"
       ></textarea>
+
       <button
         className={classes.delBtn}
         style={{ marginTop: "10px" }}
