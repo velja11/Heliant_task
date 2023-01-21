@@ -1,23 +1,26 @@
 import Task from "./Task";
 import classes from "./TaskList.module.css";
 
-const TasksList = (props) => {
+const TasksList = ({ tasks }) => {
   return (
     <div className={classes.tasklist}>
-      {props.excercise.map((exc) => {
-        return (
-          <Task
-            key={exc.id}
-            id={exc.id}
-            title={exc.title}
-            date={exc.date}
-            desc={exc.desc}
-            priority={exc.priority}
-            complete={exc.complete}
-            onClick={props.showModal}
-          />
-        );
-      })}
+      {tasks.length > 0 ? (
+        tasks.map((tsk) => {
+          return (
+            <Task
+              key={tsk.id}
+              id={tsk.id}
+              title={tsk.title}
+              date={tsk.date}
+              desc={tsk.desc}
+              priority={tsk.priority}
+              complete={tsk.complete}
+            />
+          );
+        })
+      ) : (
+        <p>Ne postoji zadatak za zadati kriterium</p>
+      )}
     </div>
   );
 };

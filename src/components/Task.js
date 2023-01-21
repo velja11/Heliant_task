@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import TaskContext from "../store/tasks-context";
 import classes from "./Task.module.css";
-import UpdateModal from "./Modal/UpdateModal";
 
 const Task = (props) => {
   const taskCtx = useContext(TaskContext);
@@ -16,17 +15,23 @@ const Task = (props) => {
     taskCtx.toogleTask(props.id);
   };
 
-  function test() {
-    props.onClick();
+  let classesPriority;
+
+  if (props.priority === "Nizak") {
+    classesPriority = classes.lowPrior;
+  } else if (props.priority === "Srednji") {
+    classesPriority = classes.middPrior;
+  } else {
+    classesPriority = classes.highPrior;
   }
 
-  const onCloseModal = (e) => {
-    e.stopPropagation();
-    taskCtx.closeModal();
-  };
-
   return (
-    <div className={classes.task} onClick={() => test()}>
+    <div
+      className={`${classes.task} ${classesPriority}`}
+      onClick={() => {
+        taskCtx.findTask(props.id);
+      }}
+    >
       <button
         className={`${
           props.complete ? classes.finishBtn : classes.unfinishBtn
@@ -40,7 +45,12 @@ const Task = (props) => {
         <h1>{props.title}</h1>
         <span>{props.date}</span>
       </div>
-      <textarea value={props.desc}>{props.desc}</textarea>
+      <textarea
+        defaultValue={props.desc}
+        placeholder={props.desc}
+        maxLength="100"
+        rows="3"
+      ></textarea>
       <button
         className={classes.delBtn}
         style={{ marginTop: "10px" }}
@@ -48,16 +58,6 @@ const Task = (props) => {
       >
         Obrisi
       </button>
-      {taskCtx.modal && (
-        <UpdateModal
-          title={props.title}
-          date={props.date}
-          desc={props.desc}
-          priority={props.priority}
-          id={props.id}
-          closeModal={(e) => onCloseModal(e)}
-        />
-      )}
     </div>
   );
 };

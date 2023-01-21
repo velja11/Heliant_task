@@ -3,13 +3,23 @@ import classes from "./UpdateModal.module.css";
 import { useContext } from "react";
 import TaskContext from "../../store/tasks-context";
 
+const getCurrDate = () => {
+  const date = new Date();
+  const currDate = date.getDate();
+  date.setDate(currDate);
+  const defaultDate = date.toLocaleDateString("en-CA");
+
+  return defaultDate;
+};
+
 const UpdateModal = (props) => {
   const taskCtx = useContext(TaskContext);
+  console.log(props);
 
   const titleRef = useRef(null);
   const [date, setDate] = useState(props.date);
   const descRef = useRef(null);
-  const [priority, setPriority] = useState("Nizak");
+  const [priority, setPriority] = useState(props.priority);
 
   const dateHandler = (e) => {
     setDate(e.target.value);
@@ -29,8 +39,8 @@ const UpdateModal = (props) => {
 
     const taskUpd = {
       title: title,
-      desc: description,
       date: date,
+      desc: description,
       priority: priority,
     };
 
@@ -43,10 +53,10 @@ const UpdateModal = (props) => {
         <div className={classes.backg} onClick={props.closeModal} />
         <div className={classes.modal}>
           <form
-            className={classes.test2}
+            className={classes.updForm}
             onSubmit={(e, id, task) => updateTaskHandler(e, id)}
           >
-            <div className={classes.test}>
+            <div className={classes.formDir}>
               <label htmlFor="naziv">Naziv</label>
               <input
                 type="text"
@@ -61,8 +71,8 @@ const UpdateModal = (props) => {
                 type="date"
                 placeholder={props.date}
                 id="datum"
-                defaultValue={date}
-                min={date}
+                defaultValue={props.date}
+                min={getCurrDate()}
                 onChange={dateHandler}
               ></input>
               <label htmlFor="opis">Opis</label>
@@ -72,9 +82,9 @@ const UpdateModal = (props) => {
                 rows="3"
                 ref={descRef}
                 required
-              >
-                {props.desc}
-              </textarea>
+                placeholder={props.desc}
+                defaultValue={props.desc}
+              ></textarea>
               <label htmlFor="prioritet">Prioritet</label>
               <select
                 id="prioritet"
